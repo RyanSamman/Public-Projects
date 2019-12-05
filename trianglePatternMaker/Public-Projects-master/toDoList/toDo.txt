@@ -1,0 +1,12 @@
+Here is your saved text
+
+you can add a line by:
+ writing info
+ press run
+
+you can remove a line by: 
+ writing the line number
+ pressing remove
+ 
+the deleted lines will go into another text file.
+Therefore your text will not be lost by accident
