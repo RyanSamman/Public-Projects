@@ -3,90 +3,134 @@ from tkinter import *
 
 def main():
 
-    def suvat_input(s="None", u="None", v="None", a="None", t="None"):
+    def suvat_input(s="", u="", v="", a="", t=""):
         # Checks which ones are present
-        sCheck = uCheck = vCheck = aCheck = tCheck = True
+        s_present = u_present = v_present = a_present = t_present = True
 
-        if s == "None":
-            sCheck = False
+        if s == "":
+            s_present = False
         else:
-            s = float(s)
+            try:
+                s = float(s)
+            except:
+                s_present = False
 
-        if u == "None":
-            uCheck = False
+        if u == "":
+            u_present = False
         else:
-            u = float(u)
+            try:
+                u = float(u)
+            except:
+                u_present = False
 
-        if v == "None":
-            vCheck = False
+        if v == "":
+            v_present = False
         else:
-            v = float(v)
+            try:
+                v = float(v)
+            except:
+                v_present = False
 
-        if a == "None":
-            aCheck = False
+        if a == "":
+            a_present = False
         else:
-            a = float(a)
+            try:
+                a = float(a)
+            except:
+                a_present = False
 
-        if t == "None":
-            tCheck = False
+        if t == "":
+            t_present = False
         else:
-            t = float(t)
+            try:
+                t = float(t)
+            except:
+                t_present = False
 
         # Calculates the rest
-        if not sCheck:
-            if uCheck and tCheck and aCheck:
+        if not s_present:
+            if u_present and t_present and a_present:
                 s = u * t + 0.5 * a * t ** 2
-            elif uCheck and vCheck and tCheck:
+                s_present = True
+            elif u_present and v_present and t_present:
                 s = 0.5 * (v + u) * t
-            elif vCheck and uCheck and aCheck:
+                s_present = True
+            elif v_present and u_present and a_present:
                 s = (v ** 2 - u ** 2) / (2 * a)
+                s_present = True
             else:
                 s = "ERROR! @ S"
 
-        if not uCheck:
-            if vCheck and uCheck and tCheck:
+        if not u_present:
+            if v_present and u_present and t_present:
                 u = v - a * t
-            elif sCheck and vCheck and tCheck:
+                u_present = True
+            elif s_present and v_present and t_present:
                 u = (2 * s / t) - v
-            elif vCheck and aCheck and sCheck:
+                u_present = True
+            elif v_present and a_present and s_present:
                 u = (v ** 2 - 2 * a * s) ** 0.5
-            elif sCheck and tCheck and aCheck:
+                u_present = True
+            elif s_present and t_present and a_present:
                 u = (s / t) - 0.5 * a * t
+                u_present = True
             else:
                 u = "ERROR! @ U"
 
-        if not vCheck:
-            if uCheck and aCheck and tCheck:
+        if not v_present:
+            if u_present and a_present and t_present:
                 v = u + a * t
-            elif sCheck and tCheck and uCheck:
+                v_present = True
+            elif s_present and t_present and u_present:
                 v = (2 * s / t) - u
-            elif uCheck and aCheck and sCheck:
+                v_present = True
+            elif u_present and a_present and s_present:
                 v = (u ** 2 + 2 * a * s) ** 0.5
+                v_present = True
             else:
                 v = "ERROR! @ V"
 
-        if not aCheck:
-            if vCheck and uCheck and tCheck:
+        if not a_present:
+            if v_present and u_present and t_present:
                 a = (v - u) / t
-            elif vCheck and uCheck and sCheck:
+                a_present = True
+            elif v_present and u_present and s_present:
                 a = (v ** 2 - u ** 2) / (2 * s)
-            elif sCheck and uCheck and tCheck:
+                a_present = True
+            elif s_present and u_present and t_present:
                 a = 2 * (s - u * t) / t ** 2
+                a_present = True
             else:
                 a = "ERROR! @ A"
-        if not tCheck:
-            if vCheck and uCheck and aCheck:
+        if not t_present:
+            if v_present and u_present and a_present:
                 t = format((v - u) / a, ".2f")
-            elif sCheck and uCheck and vCheck:
+                t_present = True
+            elif s_present and u_present and v_present:
                 t = format(2 * s / (u + v), ".2f")
-            elif uCheck and aCheck and sCheck:
+                t_present = True
+            elif u_present and a_present and s_present:
                 t = (format(-u / a + (2 * a * s + u ** 2) ** 0.5 / a, ".2f")
                      + "Or" + format(-u / a - (2 * a * s + u ** 2) ** 0.5 / a, ".2f"))
+                t_present = True
             else:
                 t = "ERROR @ T"
-        outString = ("s = %s\nu = %s\nv = %s\na = %s\nt = %s\n"
-                     % (format(s, ".2f"), format(u, ".2f"), format(v, ".2f"), format(a, ".2f"), t))
-        return outString
+
+        if s_present and u_present and v_present and a_present and t_present:
+            out_string = ("s = %s\nu = %s\nv = %s\na = %s\nt = %s\n"
+                          % (format(s, ".2f"), format(u, ".2f"), format(v, ".2f"), format(a, ".2f"), t))
+        else:
+            out_string = (
+                          "ERROR:" +
+                          "\n Displacement: {s}" +
+                          "\n Initial Velocity: {u}" +
+                          "\n Final Velocity: {v}" +
+                          "\n Accelleration: {a}" +
+                          "\n Time:  + {t}" +
+                          "INPUT AT LEAST 3 VALID NUMBERS INTO GUI"
+                          ).format(s=s_present, u=u_present, v=v_present, a=a_present, t=t_present)
+
+        return out_string
 
     def run():
         output.delete(1.0, END)
@@ -97,7 +141,7 @@ def main():
         t = inputT.get()
 
         dict1 = {"s": s, "u": u, "v": v, "a": a, "t": t}
-        #dict1 = {"s": "None", "u": "0", "v": "None", "a": "10", "t": "2"}
+        # dict1 = {"s": "None", "u": "0", "v": "None", "a": "10", "t": "2"}  # Testing code
         print(dict1)
         output.insert(END, suvat_input(**dict1))
 
@@ -108,43 +152,43 @@ def main():
         inputV.delete(0, END)
         inputA.delete(0, END)
         inputT.delete(0, END)
-        inputS.insert(0, "None")
-        inputU.insert(0, "None")
-        inputV.insert(0, "None")
-        inputA.insert(0, "None")
-        inputT.insert(0, "None")
+        inputS.insert(0, "")
+        inputU.insert(0, "")
+        inputV.insert(0, "")
+        inputA.insert(0, "")
+        inputT.insert(0, "")
 
     # Initialization
     root = Tk()
     root.title("SUVAT solver")
-    #root.geometry("400x400")
-    topGUI = Frame(root)
-    middleGUI = Frame(root)
-    bottomGUI = Frame(root)
-    topGUI.grid(row=1)
-    middleGUI.grid(row=2)
-    bottomGUI.grid(row=3)
+    root.geometry("400x400")
+    top_gui = Frame(root)
+    middle_gui = Frame(root)
+    bottom_gui = Frame(root)
+    top_gui.grid(row=1)
+    middle_gui.grid(row=2)
+    bottom_gui.grid(row=3)
 
     # Top GUI Widgets
-    Label(topGUI, text="Input 3 values", width=21).grid(row=1, column=1, columnspan=2, sticky=W)
+    Label(top_gui, text="Input 3 values", width=21).grid(row=1, column=1, columnspan=2, sticky=W)
 
-    resetter = Button(topGUI, text="Reset", command=lambda: reset(), width=15)
-    resetter.grid(row=1, column=3, sticky=E)
+    reset_button = Button(top_gui, text="Reset", command=lambda: reset(), width=15)
+    reset_button.grid(row=1, column=3, sticky=E)
 
     # Middle GUI Widgets
-    Label(middleGUI, text="S").grid(row=1, column=1, sticky=W)
-    Label(middleGUI, text="U").grid(row=2, column=1, sticky=W)
-    Label(middleGUI, text="V").grid(row=1, column=3, sticky=W)
-    Label(middleGUI, text="A").grid(row=2, column=3, sticky=W)
-    Label(middleGUI, text="T").grid(row=1, column=5, sticky=W)
-    runner = Button(middleGUI, text="Run", command=lambda: run(), width=15)
-    runner.grid(row=2, column=5, columnspan=2)
+    Label(middle_gui, text="S").grid(row=1, column=1, sticky=W)
+    Label(middle_gui, text="U").grid(row=2, column=1, sticky=W)
+    Label(middle_gui, text="V").grid(row=1, column=3, sticky=W)
+    Label(middle_gui, text="A").grid(row=2, column=3, sticky=W)
+    Label(middle_gui, text="T").grid(row=1, column=5, sticky=W)
+    run_button = Button(middle_gui, text="Run", command=lambda: run(), width=15)
+    run_button.grid(row=2, column=5, columnspan=2)
 
-    inputS = Entry(middleGUI, width=10)
-    inputU = Entry(middleGUI, width=10)
-    inputV = Entry(middleGUI, width=10)
-    inputA = Entry(middleGUI, width=10)
-    inputT = Entry(middleGUI, width=10)
+    inputS = Entry(middle_gui, width=10)
+    inputU = Entry(middle_gui, width=10)
+    inputV = Entry(middle_gui, width=10)
+    inputA = Entry(middle_gui, width=10)
+    inputT = Entry(middle_gui, width=10)
 
     inputS.grid(row=1, column=2, sticky=W)
     inputU.grid(row=2, column=2, sticky=W)
@@ -153,9 +197,9 @@ def main():
     inputT.grid(row=1, column=6, sticky=W)
 
     # Bottom GUI Widgets
-    output = Text(bottomGUI, width=30, height=6)
+    output = Text(bottom_gui, width=30, height=6)
     output.grid(row=1)
-    Button(bottomGUI, width=30, text="QUIT", command=root.destroy, fg="red").grid(row=2)
+    Button(bottom_gui, width=30, text="QUIT", command=root.destroy, fg="red").grid(row=2)
     reset()
     root.mainloop()
 
