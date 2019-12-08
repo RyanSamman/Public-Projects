@@ -1,5 +1,6 @@
 from tkinter import *
 
+
 def main():
 
     def suvat_input(s="None", u="None", v="None", a="None", t="None"):
@@ -150,7 +151,6 @@ def main():
     inputV.grid(row=1, column=4, sticky=W)
     inputA.grid(row=2, column=4, sticky=W)
     inputT.grid(row=1, column=6, sticky=W)
-
 
     # Bottom GUI Widgets
     output = Text(bottomGUI, width=30, height=6)

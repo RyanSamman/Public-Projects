@@ -7,7 +7,7 @@ def is_prime(integer):
     if integer == 2:
         return True
     else:
-        for divider in range(2, integer):
+        for divider in range(2, integer//2):
             if integer % divider == 0:
                 return False
         return True
