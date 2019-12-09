@@ -2,20 +2,36 @@ from tkinter import *
 from patterns import *
 
 
-def main():
-    def run():
-        pattern_chooser = var.get()
-        x = eval(input_one.get())
+def run():
+    pattern_chooser = var.get()
+    x = input_one.get()
+    out_string = ""
+
+    try:
+        x = eval(x)
         y = 2 if x >= 10 else 1
 
-        list1 = ["Select a Pattern", pattern1(x, y), pattern2(x, y), pattern3(x, y), pattern4(x, y)]
-        outstring = list1[pattern_chooser]
-        output_one.delete(1.0, END)
-        output_one.insert(1.0, outstring)
+        if x > 20:
+            print("ERROR, INPUT MORE THAN 20")
+            out_string = "Enter a number smaller or equal to 20"
+        elif x <= 20:
+            list1 = ["Select a Pattern", pattern1(x, y), pattern2(x, y), pattern3(x, y), pattern4(x, y)]
+            out_string = list1[pattern_chooser]
+    except:
+        print("ERROR, INPUT NOT A NUMBER")
+        out_string = "Enter a valid number"
 
-    def reset():
-        output_one.delete(1.0, END)
-        input_one.delete(0, END)
+    output_one.delete(1.0, END)
+    output_one.insert(1.0, out_string)
+
+
+def reset():
+    output_one.delete(1.0, END)
+    input_one.delete(0, END)
+
+
+def main():
+    global var, input_one, output_one
 
     root = Tk()
     root.title("~~ Pattern Generator ~~")
@@ -42,17 +58,17 @@ def main():
 
     # ~~~~~~~~~~~~~~~~ Radios ~~~~~~~~~~~~~~~~
     var = IntVar()
-    R1 = Radiobutton(top_gui, text="Pattern 1", variable=var, value=1, command=lambda: run())
-    R1.grid(row=3, column=1)
+    r1 = Radiobutton(top_gui, text="Pattern 1", variable=var, value=1, command=lambda: run())
+    r1.grid(row=3, column=1)
 
-    R2 = Radiobutton(top_gui, text="Pattern 2", variable=var, value=2, command=lambda: run())
-    R2.grid(row=3, column=2)
+    r2 = Radiobutton(top_gui, text="Pattern 2", variable=var, value=2, command=lambda: run())
+    r2.grid(row=3, column=2)
 
-    R3 = Radiobutton(top_gui, text="Pattern 3", variable=var, value=3, command=lambda: run())
-    R3.grid(row=4, column=1)
+    r3 = Radiobutton(top_gui, text="Pattern 3", variable=var, value=3, command=lambda: run())
+    r3.grid(row=4, column=1)
 
-    R3 = Radiobutton(top_gui, text="Pattern 4", variable=var, value=4, command=lambda: run())
-    R3.grid(row=4, column=2)
+    r4 = Radiobutton(top_gui, text="Pattern 4", variable=var, value=4, command=lambda: run())
+    r4.grid(row=4, column=2)
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     root.mainloop()

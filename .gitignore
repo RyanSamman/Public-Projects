@@ -1,2 +1,7 @@
-
+/Testing/
+*.log
+*.xml
+*.iml
+/venv/
+/.idea/*
 *.pyc
